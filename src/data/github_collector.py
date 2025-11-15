@@ -117,6 +117,33 @@ class GitHubCollector:
             logger.error(f"Error fetching repository {repo_full_name}: {e}")
             raise
 
+    def _is_major_release(self, tag_name: str) -> bool:
+        """
+        Determine if a release is a major or minor release (not a patch).
+
+        Examples of major/minor releases: v1.0.0, v2.0.0, v1.5.0, 2.0.0
+        Examples of patch releases: v1.0.1, v1.0.2, v2.3.1
+
+        Args:
+            tag_name: Release tag name
+
+        Returns:
+            True if major or minor release, False otherwise
+        """
+        import re
+        # Match semantic versioning patterns
+        # Matches: v1.0.0, 1.0.0, v2.5.0, etc.
+        pattern = r'v?(\d+)\.(\d+)\.(\d+)'
+        match = re.search(pattern, tag_name)
+
+        if match:
+            major, minor, patch = map(int, match.groups())
+            # Consider it "major" if it's X.0.0 or X.Y.0 (not X.Y.Z where Z > 0)
+            return patch == 0
+
+        # If no semantic version found, include it (might be important like "release-2024")
+        return True
+
     def collect_releases(
         self,
         repo_full_name: str,
@@ -153,10 +180,16 @@ class GitHubCollector:
         repo = self.get_repository(repo_full_name)
 
         releases = []
+        major_only = self.config.get('events.releases.major_releases_only', False)
+
         try:
             for release in repo.get_releases():
                 # Skip pre-releases if configured
                 if release.prerelease and not include_prerelease:
+                    continue
+
+                # Skip patch releases if major_releases_only is enabled
+                if major_only and not self._is_major_release(release.tag_name):
                     continue
 
                 release_data = {
