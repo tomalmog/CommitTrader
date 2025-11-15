@@ -48,23 +48,58 @@ class GitHubCollector:
 
     def get_rate_limit_info(self) -> Dict[str, Any]:
         """Get current rate limit status."""
-        rate_limit = self.github.get_rate_limit()
-        return {
-            'core_remaining': rate_limit.core.remaining,
-            'core_limit': rate_limit.core.limit,
-            'core_reset': rate_limit.core.reset,
-            'search_remaining': rate_limit.search.remaining,
-            'search_limit': rate_limit.search.limit,
-        }
+        try:
+            rate_limit = self.github.get_rate_limit()
+            # Handle both old and new PyGithub API versions
+            if hasattr(rate_limit, 'core'):
+                return {
+                    'core_remaining': rate_limit.core.remaining,
+                    'core_limit': rate_limit.core.limit,
+                    'core_reset': rate_limit.core.reset,
+                    'search_remaining': rate_limit.search.remaining,
+                    'search_limit': rate_limit.search.limit,
+                }
+            else:
+                # Newer API version
+                return {
+                    'core_remaining': rate_limit.rate.remaining,
+                    'core_limit': rate_limit.rate.limit,
+                    'core_reset': rate_limit.rate.reset,
+                    'search_remaining': getattr(rate_limit, 'search', {}).get('remaining', 0),
+                    'search_limit': getattr(rate_limit, 'search', {}).get('limit', 0),
+                }
+        except Exception as e:
+            logger.warning(f"Could not get rate limit info: {e}")
+            return {
+                'core_remaining': 5000,
+                'core_limit': 5000,
+                'core_reset': datetime.utcnow(),
+                'search_remaining': 30,
+                'search_limit': 30,
+            }
 
     def _wait_for_rate_limit(self):
         """Wait if rate limit is low."""
-        rate_limit = self.github.get_rate_limit()
-        if rate_limit.core.remaining < 10:
-            sleep_time = (rate_limit.core.reset - datetime.utcnow()).total_seconds() + 10
-            if sleep_time > 0:
-                logger.warning(f"Rate limit low. Sleeping for {sleep_time:.0f} seconds...")
-                time.sleep(sleep_time)
+        try:
+            rate_limit = self.github.get_rate_limit()
+            remaining = None
+            reset_time = None
+
+            # Handle both old and new PyGithub API versions
+            if hasattr(rate_limit, 'core'):
+                remaining = rate_limit.core.remaining
+                reset_time = rate_limit.core.reset
+            elif hasattr(rate_limit, 'rate'):
+                remaining = rate_limit.rate.remaining
+                reset_time = rate_limit.rate.reset
+
+            if remaining is not None and remaining < 10:
+                sleep_time = (reset_time - datetime.utcnow()).total_seconds() + 10
+                if sleep_time > 0:
+                    logger.warning(f"Rate limit low. Sleeping for {sleep_time:.0f} seconds...")
+                    time.sleep(sleep_time)
+        except Exception as e:
+            logger.warning(f"Could not check rate limit, continuing anyway: {e}")
 
     def get_repository(self, repo_full_name: str) -> Repository:
         """
@@ -81,6 +116,33 @@ class GitHubCollector:
         except GithubException as e:
             logger.error(f"Error fetching repository {repo_full_name}: {e}")
             raise
+
+    def _is_major_release(self, tag_name: str) -> bool:
+        """
+        Determine if a release is a major or minor release (not a patch).
+
+        Examples of major/minor releases: v1.0.0, v2.0.0, v1.5.0, 2.0.0
+        Examples of patch releases: v1.0.1, v1.0.2, v2.3.1
+
+        Args:
+            tag_name: Release tag name
+
+        Returns:
+            True if major or minor release, False otherwise
+        """
+        import re
+        # Match semantic versioning patterns
+        # Matches: v1.0.0, 1.0.0, v2.5.0, etc.
+        pattern = r'v?(\d+)\.(\d+)\.(\d+)'
+        match = re.search(pattern, tag_name)
+
+        if match:
+            major, minor, patch = map(int, match.groups())
+            # Consider it "major" if it's X.0.0 or X.Y.0 (not X.Y.Z where Z > 0)
+            return patch == 0
+
+        # If no semantic version found, include it (might be important like "release-2024")
+        return True
 
     def collect_releases(
         self,
@@ -118,10 +180,16 @@ class GitHubCollector:
         repo = self.get_repository(repo_full_name)
 
         releases = []
+        major_only = self.config.get('events.releases.major_releases_only', False)
+
         try:
             for release in repo.get_releases():
                 # Skip pre-releases if configured
                 if release.prerelease and not include_prerelease:
+                    continue
+
+                # Skip patch releases if major_releases_only is enabled
+                if major_only and not self._is_major_release(release.tag_name):
                     continue
 
                 release_data = {
