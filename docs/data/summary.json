@@ -1,0 +1,88 @@
+{
+  "analysis_date": "2025-11-15T21:24:31.553548",
+  "total_events": 1413,
+  "total_companies": 31,
+  "total_repositories": 47,
+  "valid_event_studies": 1413,
+  "event_types": {
+    "release": 1413
+  },
+  "overall_statistics": {
+    "mean_ar_day_0": 0.0007725928194399659,
+    "median_ar_day_0": -0.000175243489407121,
+    "mean_car_5_5": 0.0012565486525875616,
+    "pct_positive_ar": 49.32767162066526
+  },
+  "statistical_significance": {
+    "t_test": {
+      "significant": "False",
+      "p_value": 0.1793821857134701,
+      "significance_level": "ns"
+    },
+    "sign_test": {
+      "significant": "False",
+      "p_value": 0.6320593333781124,
+      "significance_level": "ns"
+    },
+    "wilcoxon_test": {
+      "significant": "False",
+      "p_value": 0.8225482989034142,
+      "significance_level": "ns"
+    },
+    "cross_sectional": {
+      "significant": "False",
+      "p_value": 0.1793821857134701,
+      "significance_level": "ns"
+    },
+    "CAR_0_0_test": {
+      "significant": "False",
+      "p_value": 0.1793821857134701,
+      "significance_level": "ns"
+    },
+    "CAR_0_1_test": {
+      "significant": "False",
+      "p_value": 0.8090388111055176,
+      "significance_level": "ns"
+    },
+    "CAR_-1_1_test": {
+      "significant": "False",
+      "p_value": 0.9372992894177905,
+      "significance_level": "ns"
+    },
+    "CAR_0_5_test": {
+      "significant": "False",
+      "p_value": 0.5457564778274056,
+      "significance_level": "ns"
+    },
+    "CAR_-5_5_test": {
+      "significant": "False",
+      "p_value": 0.5023076124596928,
+      "significance_level": "ns"
+    }
+  },
+  "by_event_type": [
+    {
+      "event_type": "release",
+      "ar_day_0_mean": 0.0007725928194399659,
+      "ar_day_0_median": -0.000175243489407121,
+      "ar_day_0_std": 0.021619230053546618,
+      "ar_day_0_count": 1413,
+      "mean_ar_mean": 0.00012302339010582846,
+      "CAR_0_0_mean": 0.0007725928194399659,
+      "CAR_0_0_median": -0.000175243489407121,
+      "CAR_0_0_std": 0.021619230053546618,
+      "CAR_0_1_mean": 0.0001910147252446236,
+      "CAR_0_1_median": -0.0005012711005776879,
+      "CAR_0_1_std": 0.029705755718011595,
+      "CAR_-1_1_mean": -8.089899475701446e-05,
+      "CAR_-1_1_median": -0.0004595773172716682,
+      "CAR_-1_1_std": 0.03865064159291126,
+      "CAR_0_5_mean": 0.0008842258313015382,
+      "CAR_0_5_median": -0.0005784928278674793,
+      "CAR_0_5_std": 0.05500448618140555,
+      "CAR_-5_5_mean": 0.0012565486525875614,
+      "CAR_-5_5_median": -0.0001621355611378262,
+      "CAR_-5_5_std": 0.07038900707080455
+    }
+  ]
+}

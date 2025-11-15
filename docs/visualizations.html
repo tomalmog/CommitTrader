@@ -1,0 +1,540 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Visualizations - CommitTrader Research</title>
+    <style>
+        :root {
+            --color-bg: #fafafa;
+            --color-text: #1a1a1a;
+            --color-text-light: #666;
+            --color-border: #e0e0e0;
+            --color-accent: #2c2c2c;
+            --font-serif: 'Georgia', 'Times New Roman', serif;
+            --font-sans: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            line-height: 1.7;
+            color: var(--color-text);
+            background: var(--color-bg);
+        }
+
+        .nav {
+            background: white;
+            border-bottom: 1px solid var(--color-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 40px;
+            display: flex;
+            gap: 35px;
+            font-size: 0.95em;
+        }
+
+        .nav a {
+            color: var(--color-text);
+            text-decoration: none;
+            transition: opacity 0.4s ease;
+            opacity: 0.6;
+        }
+
+        .nav a:hover {
+            opacity: 1;
+        }
+
+        .header {
+            background: white;
+            border-bottom: 1px solid var(--color-border);
+            padding: 80px 40px 60px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-family: var(--font-serif);
+            font-size: 2.8em;
+            font-weight: 400;
+            color: var(--color-accent);
+            letter-spacing: -0.02em;
+            margin-bottom: 15px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            color: var(--color-text-light);
+            font-weight: 300;
+        }
+
+        .back-link {
+            display: inline-block;
+            max-width: 1200px;
+            margin: 30px auto 0;
+            padding: 0 40px;
+            color: var(--color-text);
+            text-decoration: none;
+            opacity: 0.6;
+            transition: opacity 0.4s ease;
+            font-size: 0.95em;
+        }
+
+        .back-link:hover {
+            opacity: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 40px 100px;
+        }
+
+        .viz-section {
+            background: white;
+            border: 1px solid var(--color-border);
+            padding: 50px;
+            margin-bottom: 40px;
+        }
+
+        .viz-section h2 {
+            font-family: var(--font-serif);
+            font-size: 1.6em;
+            font-weight: 400;
+            color: var(--color-accent);
+            margin: 0 0 15px 0;
+            letter-spacing: -0.01em;
+        }
+
+        .viz-section p {
+            color: var(--color-text-light);
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .chart-container {
+            width: 100%;
+            height: 500px;
+            margin: 30px 0;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1px;
+            background: var(--color-border);
+            border: 1px solid var(--color-border);
+            margin: 30px 0;
+        }
+
+        .stat-box {
+            background: white;
+            padding: 25px 20px;
+            text-align: center;
+        }
+
+        .stat-box .label {
+            font-size: 0.7em;
+            color: var(--color-text-light);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .stat-box .value {
+            font-size: 1.8em;
+            font-weight: 300;
+            color: var(--color-accent);
+            font-family: var(--font-serif);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--color-text-light);
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 60px 20px 40px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .container {
+                padding: 40px 20px;
+            }
+
+            .viz-section {
+                padding: 30px 20px;
+            }
+
+            .nav-content {
+                flex-direction: column;
+                gap: 15px;
+                padding: 20px;
+            }
+
+            .chart-container {
+                height: 400px;
+            }
+        }
+    </style>
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <a href="index.html" class="back-link">← Back to Home</a>
+    </div>
+
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="index.html">Home</a>
+            <a href="report.html">Full Report</a>
+            <a href="visualizations.html">Visualizations</a>
+            <a href="methodology.html">Methodology</a>
+            <a href="downloads.html">Downloads</a>
+        </div>
+    </nav>
+
+    <div class="header">
+        <h1>Data Visualizations</h1>
+        <p>Interactive exploration of 1,413 GitHub release events and stock price impacts</p>
+    </div>
+
+    <div class="container">
+        <!-- Summary Statistics -->
+        <div class="viz-section">
+            <h2>Overview Statistics</h2>
+            <p>Key metrics from the complete analysis of GitHub releases and abnormal stock returns.</p>
+            <div class="stats-row">
+                <div class="stat-box">
+                    <div class="label">Total Events</div>
+                    <div class="value">1,413</div>
+                </div>
+                <div class="stat-box">
+                    <div class="label">Companies</div>
+                    <div class="value">31</div>
+                </div>
+                <div class="stat-box">
+                    <div class="label">Mean AR</div>
+                    <div class="value">0.08%</div>
+                </div>
+                <div class="stat-box">
+                    <div class="label">Median AR</div>
+                    <div class="value">-0.02%</div>
+                </div>
+                <div class="stat-box">
+                    <div class="label">Std Dev</div>
+                    <div class="value">2.16%</div>
+                </div>
+                <div class="stat-box">
+                    <div class="label">% Positive</div>
+                    <div class="value">49.3%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Distribution of Abnormal Returns -->
+        <div class="viz-section">
+            <h2>Distribution of Abnormal Returns</h2>
+            <p>Histogram showing the distribution of abnormal returns on event day (Day 0). A normal distribution centered near zero suggests no systematic impact.</p>
+            <div id="ar-distribution" class="chart-container">
+                <div class="loading">Loading chart...</div>
+            </div>
+        </div>
+
+        <!-- Cumulative Abnormal Returns -->
+        <div class="viz-section">
+            <h2>Cumulative Abnormal Returns Over Event Window</h2>
+            <p>Average CAR from 5 days before to 5 days after GitHub releases. Flat trend indicates no significant market reaction.</p>
+            <div id="car-timeline" class="chart-container">
+                <div class="loading">Loading chart...</div>
+            </div>
+        </div>
+
+        <!-- Top Companies by Event Count -->
+        <div class="viz-section">
+            <h2>Event Distribution by Company</h2>
+            <p>Number of major GitHub releases analyzed per company. Larger companies with active open-source projects show more events.</p>
+            <div id="company-events" class="chart-container">
+                <div class="loading">Loading chart...</div>
+            </div>
+        </div>
+
+        <!-- Abnormal Returns by Company -->
+        <div class="viz-section">
+            <h2>Mean Abnormal Returns by Company</h2>
+            <p>Average abnormal return on event day for each company. Most companies cluster around zero, showing no consistent impact.</p>
+            <div id="company-ar" class="chart-container">
+                <div class="loading">Loading chart...</div>
+            </div>
+        </div>
+
+        <!-- Event Timeline -->
+        <div class="viz-section">
+            <h2>Event Timeline</h2>
+            <p>Distribution of GitHub releases over time. Shows when major version releases occurred across all companies.</p>
+            <div id="event-timeline" class="chart-container">
+                <div class="loading">Loading chart...</div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Configuration for consistent chart styling
+        const chartConfig = {
+            displayModeBar: false,
+            responsive: true
+        };
+
+        const layoutBase = {
+            font: {
+                family: "'Helvetica Neue', Arial, sans-serif",
+                size: 13,
+                color: '#1a1a1a'
+            },
+            paper_bgcolor: 'white',
+            plot_bgcolor: 'white',
+            margin: { t: 40, r: 40, b: 60, l: 60 },
+            xaxis: {
+                gridcolor: '#e0e0e0',
+                linecolor: '#e0e0e0',
+                zerolinecolor: '#e0e0e0'
+            },
+            yaxis: {
+                gridcolor: '#e0e0e0',
+                linecolor: '#e0e0e0',
+                zerolinecolor: '#e0e0e0'
+            }
+        };
+
+        // Check if we're running on file:// protocol
+        if (window.location.protocol === 'file:') {
+            document.querySelectorAll('.loading').forEach(el => {
+                el.innerHTML = `
+                    <div style="padding: 40px; text-align: center;">
+                        <p style="color: #666; margin-bottom: 20px;">⚠️ Charts cannot load when opening HTML directly</p>
+                        <p style="color: #1a1a1a; font-weight: 500; margin-bottom: 15px;">To view visualizations, start a local web server:</p>
+                        <pre style="background: #f5f5f5; padding: 15px; border: 1px solid #e0e0e0; display: inline-block; text-align: left; font-size: 0.9em;">
+cd docs
+python3 -m http.server 8000</pre>
+                        <p style="color: #666; margin-top: 15px;">Then visit: <a href="http://localhost:8000/visualizations.html" style="color: #2c2c2c;">http://localhost:8000/visualizations.html</a></p>
+                    </div>
+                `;
+            });
+            throw new Error('Running on file:// protocol');
+        }
+
+        // Load and visualize data
+        Promise.all([
+            d3.csv('data/event_study_results.csv'),
+            d3.json('data/summary.json')
+        ]).then(([eventData, summary]) => {
+
+            // 1. Distribution of Abnormal Returns
+            const arValues = eventData.map(d => parseFloat(d.ar_day_0) * 100).filter(v => !isNaN(v));
+
+            const arTrace = {
+                x: arValues,
+                type: 'histogram',
+                nbinsx: 50,
+                marker: {
+                    color: '#2c2c2c',
+                    line: { color: 'white', width: 1 }
+                },
+                name: 'Abnormal Returns'
+            };
+
+            Plotly.newPlot('ar-distribution', [arTrace], {
+                ...layoutBase,
+                title: '',
+                xaxis: { ...layoutBase.xaxis, title: 'Abnormal Return (%)' },
+                yaxis: { ...layoutBase.yaxis, title: 'Frequency' },
+                showlegend: false
+            }, chartConfig);
+
+            // 2. CAR Timeline (simulated from event window)
+            // Calculate average CAR for each day in event window
+            const eventWindows = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5];
+            const carData = eventWindows.map(day => {
+                const carCol = `car_${day < 0 ? 'n' : ''}${Math.abs(day)}`;
+                const values = eventData
+                    .map(d => parseFloat(d[carCol]) * 100)
+                    .filter(v => !isNaN(v));
+                return values.length > 0 ? d3.mean(values) : 0;
+            });
+
+            const carTrace = {
+                x: eventWindows,
+                y: carData,
+                type: 'scatter',
+                mode: 'lines+markers',
+                line: { color: '#2c2c2c', width: 2 },
+                marker: { size: 6, color: '#2c2c2c' },
+                name: 'Average CAR'
+            };
+
+            Plotly.newPlot('car-timeline', [carTrace], {
+                ...layoutBase,
+                title: '',
+                xaxis: {
+                    ...layoutBase.xaxis,
+                    title: 'Days Relative to Event',
+                    tickmode: 'linear',
+                    dtick: 1
+                },
+                yaxis: { ...layoutBase.yaxis, title: 'Cumulative Abnormal Return (%)' },
+                showlegend: false,
+                shapes: [{
+                    type: 'line',
+                    x0: 0, x1: 0,
+                    y0: Math.min(...carData), y1: Math.max(...carData),
+                    line: { color: '#999', width: 1, dash: 'dot' }
+                }]
+            }, chartConfig);
+
+            // 3. Events by Company
+            const companyCounts = d3.rollup(
+                eventData,
+                v => v.length,
+                d => d.ticker
+            );
+
+            const companyCountsArray = Array.from(companyCounts, ([ticker, count]) => ({
+                ticker, count
+            })).sort((a, b) => b.count - a.count).slice(0, 15);
+
+            const companyEventsTrace = {
+                x: companyCountsArray.map(d => d.count),
+                y: companyCountsArray.map(d => d.ticker),
+                type: 'bar',
+                orientation: 'h',
+                marker: { color: '#2c2c2c' }
+            };
+
+            Plotly.newPlot('company-events', [companyEventsTrace], {
+                ...layoutBase,
+                title: '',
+                xaxis: { ...layoutBase.xaxis, title: 'Number of Events' },
+                yaxis: {
+                    ...layoutBase.yaxis,
+                    title: '',
+                    automargin: true
+                },
+                showlegend: false,
+                height: 500
+            }, chartConfig);
+
+            // 4. Mean AR by Company
+            const companyAR = d3.rollup(
+                eventData,
+                v => d3.mean(v.map(d => parseFloat(d.ar_day_0) * 100)),
+                d => d.ticker
+            );
+
+            const companyARArray = Array.from(companyAR, ([ticker, ar]) => ({
+                ticker, ar
+            })).sort((a, b) => b.ar - a.ar).slice(0, 15);
+
+            const companyARTrace = {
+                x: companyARArray.map(d => d.ar),
+                y: companyARArray.map(d => d.ticker),
+                type: 'bar',
+                orientation: 'h',
+                marker: {
+                    color: companyARArray.map(d => d.ar >= 0 ? '#2c2c2c' : '#666')
+                }
+            };
+
+            Plotly.newPlot('company-ar', [companyARTrace], {
+                ...layoutBase,
+                title: '',
+                xaxis: { ...layoutBase.xaxis, title: 'Mean Abnormal Return (%)' },
+                yaxis: {
+                    ...layoutBase.yaxis,
+                    title: '',
+                    automargin: true
+                },
+                showlegend: false,
+                height: 500
+            }, chartConfig);
+
+            // 5. Event Timeline
+            const eventDates = eventData
+                .map(d => ({
+                    date: new Date(d.event_date),
+                    ticker: d.ticker
+                }))
+                .filter(d => !isNaN(d.date.getTime()))
+                .sort((a, b) => a.date - b.date);
+
+            const monthCounts = d3.rollup(
+                eventDates,
+                v => v.length,
+                d => d3.timeMonth(d.date)
+            );
+
+            const timelineData = Array.from(monthCounts, ([date, count]) => ({
+                date, count
+            })).sort((a, b) => a.date - b.date);
+
+            const timelineTrace = {
+                x: timelineData.map(d => d.date),
+                y: timelineData.map(d => d.count),
+                type: 'scatter',
+                mode: 'lines',
+                fill: 'tozeroy',
+                line: { color: '#2c2c2c', width: 1.5 },
+                fillcolor: 'rgba(44, 44, 44, 0.1)'
+            };
+
+            Plotly.newPlot('event-timeline', [timelineTrace], {
+                ...layoutBase,
+                title: '',
+                xaxis: { ...layoutBase.xaxis, title: 'Date' },
+                yaxis: { ...layoutBase.yaxis, title: 'Events per Month' },
+                showlegend: false
+            }, chartConfig);
+
+            // Hide all loading messages after charts are rendered
+            document.querySelectorAll('.loading').forEach(el => {
+                el.style.display = 'none';
+            });
+
+        }).catch(error => {
+            console.error('Error loading data:', error);
+            if (window.location.protocol !== 'file:') {
+                document.querySelectorAll('.loading').forEach(el => {
+                    el.innerHTML = `
+                        <div style="padding: 40px; text-align: center; color: #666;">
+                            <p style="margin-bottom: 15px;">Error loading data: ${error.message}</p>
+                            <p style="font-size: 0.9em;">Make sure you're running from a web server, not opening the file directly.</p>
+                            <pre style="background: #f5f5f5; padding: 15px; border: 1px solid #e0e0e0; display: inline-block; text-align: left; margin-top: 15px; font-size: 0.85em;">
+cd docs
+python3 -m http.server 8000</pre>
+                        </div>
+                    `;
+                });
+            }
+        });
+    </script>
+</body>
+</html>

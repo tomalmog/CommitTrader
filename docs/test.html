@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Loading Test</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <h1>Testing Data Loading</h1>
+    <div id="status">Loading...</div>
+    <div id="results"></div>
+
+    <script>
+        const status = document.getElementById('status');
+        const results = document.getElementById('results');
+
+        status.innerHTML = 'Testing CSV load...';
+
+        d3.csv('data/event_study_results.csv')
+            .then(data => {
+                status.innerHTML = `✅ SUCCESS! Loaded ${data.length} rows`;
+                results.innerHTML = `<pre>First row: ${JSON.stringify(data[0], null, 2)}</pre>`;
+            })
+            .catch(error => {
+                status.innerHTML = `❌ ERROR: ${error.message}`;
+                results.innerHTML = `<pre>Error details: ${JSON.stringify(error, null, 2)}</pre>`;
+            });
+    </script>
+</body>
+</html>

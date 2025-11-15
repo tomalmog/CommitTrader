@@ -27,17 +27,64 @@
             line-height: 1.7;
             color: var(--color-text);
             background: var(--color-bg);
+        }
+
+        .nav {
+            background: white;
+            border-bottom: 1px solid var(--color-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
             max-width: 1100px;
             margin: 0 auto;
-            padding: 40px 40px 80px;
+            padding: 20px 40px;
+            display: flex;
+            gap: 35px;
+            font-size: 0.95em;
+        }
+
+        .nav a {
+            color: var(--color-text);
+            text-decoration: none;
+            transition: opacity 0.4s ease;
+            opacity: 0.6;
+        }
+
+        .nav a:hover {
+            opacity: 1;
+        }
+
+        .back-link {
+            display: inline-block;
+            max-width: 1100px;
+            margin: 30px auto 0;
+            padding: 0 40px;
+            color: var(--color-text);
+            text-decoration: none;
+            opacity: 0.6;
+            transition: opacity 0.4s ease;
+            font-size: 0.95em;
+        }
+
+        .back-link:hover {
+            opacity: 1;
         }
 
         .header {
             background: white;
-            border: 1px solid var(--color-border);
+            border-bottom: 1px solid var(--color-border);
             padding: 60px 50px;
             margin-bottom: 50px;
             text-align: center;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 40px 80px;
         }
 
         .header h1 {
@@ -61,6 +108,11 @@
             padding: 50px;
             margin-bottom: 30px;
             border: 1px solid var(--color-border);
+            border-top: none;
+        }
+
+        .section:first-of-type {
+            border-top: 1px solid var(--color-border);
         }
 
         .section h2 {
@@ -218,23 +270,10 @@
             padding: 20px 0;
         }
 
-        .back-link {
-            display: inline-block;
-            margin-bottom: 30px;
-            color: var(--color-text);
-            text-decoration: none;
-            opacity: 0.6;
-            transition: opacity 0.4s ease;
-            font-size: 0.95em;
-        }
-
-        .back-link:hover {
-            opacity: 1;
-        }
 
         @media (max-width: 768px) {
-            body {
-                padding: 20px;
+            .container {
+                padding: 0 20px 60px;
             }
 
             .header {
@@ -249,6 +288,12 @@
                 padding: 30px 25px;
             }
 
+            .nav-content {
+                flex-direction: column;
+                gap: 15px;
+                padding: 20px;
+            }
+
             th, td {
                 padding: 12px 10px;
                 font-size: 0.9em;
@@ -258,7 +303,19 @@
     <script src="https://cdn.plot.ly/plotly-2.26.0.min.js" charset="utf-8"></script>
 </head>
 <body>
-    <a href="index.html" class="back-link">← Back to Home</a>
+    <div style="max-width: 1100px; margin: 0 auto;">
+        <a href="index.html" class="back-link">← Back to Home</a>
+    </div>
+
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="index.html">Home</a>
+            <a href="report.html">Full Report</a>
+            <a href="visualizations.html">Visualizations</a>
+            <a href="methodology.html">Methodology</a>
+            <a href="downloads.html">Downloads</a>
+        </div>
+    </nav>
 
     <div class="header">
         <h1>CommitTrader Research Report</h1>
@@ -267,6 +324,7 @@
         </div>
     </div>
 
+    <div class="container">
     <div class="section">
         <h2>Executive Summary</h2>
         <div class="stats-grid">
@@ -456,9 +514,11 @@
         <p>This research is for educational purposes only and should not be used as investment advice.</p>
         <p style="margin-top: 15px;">
             <a href="index.html" style="color: inherit; opacity: 0.6; transition: opacity 0.3s;">Back to Home</a> |
+            <a href="visualizations.html" style="color: inherit; opacity: 0.6; transition: opacity 0.3s;">Visualizations</a> |
             <a href="methodology.html" style="color: inherit; opacity: 0.6; transition: opacity 0.3s;">Methodology</a> |
             <a href="downloads.html" style="color: inherit; opacity: 0.6; transition: opacity 0.3s;">Downloads</a>
         </p>
+    </div>
     </div>
 </body>
 </html>
