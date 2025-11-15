@@ -43,7 +43,7 @@ events:
     min_days_between: 1  # Minimum days between releases to avoid clustering
 
   commits:
-    enabled: false  # Temporarily disabled for faster demo
+    enabled: false  # Disabled - too slow for 75 companies. Releases are faster and more impactful.
     aggregation: "daily"  # Options: daily, weekly
     spike_threshold: 2.0  # Std deviations above mean to flag as spike
     min_commits: 10  # Minimum commits to consider
