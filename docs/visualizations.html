@@ -514,6 +514,11 @@ python3 -m http.server 8000</pre>
                 showlegend: false
             }, chartConfig);
 
+            // Hide all loading messages after charts are rendered
+            document.querySelectorAll('.loading').forEach(el => {
+                el.style.display = 'none';
+            });
+
         }).catch(error => {
             console.error('Error loading data:', error);
             if (window.location.protocol !== 'file:') {
