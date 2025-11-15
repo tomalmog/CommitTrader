@@ -6,82 +6,163 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Methodology - CommitTrader Research</title>
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.8;
-            color: #333;
+        :root {
+            --color-bg: #fafafa;
+            --color-text: #1a1a1a;
+            --color-text-light: #666;
+            --color-border: #e0e0e0;
+            --color-accent: #2c2c2c;
+            --font-serif: 'Georgia', 'Times New Roman', serif;
+            --font-sans: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            line-height: 1.7;
+            color: var(--color-text);
+            background: var(--color-bg);
         }
 
         .nav {
             background: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            padding: 15px 20px;
+            border-bottom: 1px solid var(--color-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px 40px;
+            display: flex;
+            gap: 35px;
+            font-size: 0.95em;
         }
 
         .nav a {
-            color: #667eea;
+            color: var(--color-text);
             text-decoration: none;
-            font-weight: 600;
-            margin-right: 30px;
+            transition: opacity 0.4s ease;
+            opacity: 0.6;
+        }
+
+        .nav a:hover {
+            opacity: 1;
         }
 
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 60px 20px;
+            background: white;
+            border-bottom: 1px solid var(--color-border);
+            padding: 100px 40px 80px;
             text-align: center;
         }
 
         .header h1 {
-            font-size: 2.5em;
-            margin: 0;
+            font-family: var(--font-serif);
+            font-size: 2.8em;
+            font-weight: 400;
+            color: var(--color-accent);
+            letter-spacing: -0.02em;
         }
 
         .container {
             max-width: 900px;
-            margin: 40px auto;
-            padding: 0 20px;
+            margin: 0 auto;
+            padding: 60px 40px 100px;
         }
 
         h2 {
-            color: #667eea;
-            margin-top: 40px;
-            border-bottom: 2px solid #667eea;
-            padding-bottom: 10px;
+            font-family: var(--font-serif);
+            font-size: 1.8em;
+            font-weight: 400;
+            color: var(--color-accent);
+            margin-top: 60px;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--color-border);
+            letter-spacing: -0.01em;
+        }
+
+        h3 {
+            font-family: var(--font-serif);
+            font-size: 1.2em;
+            font-weight: 400;
+            color: var(--color-accent);
+            margin: 25px 0 15px 0;
         }
 
         .method-box {
-            background: #f0f4ff;
-            padding: 25px;
-            border-radius: 8px;
-            margin: 20px 0;
-            border-left: 4px solid #667eea;
+            background: white;
+            padding: 35px;
+            margin: 25px 0;
+            border: 1px solid var(--color-border);
+            border-left: 2px solid var(--color-text);
         }
 
         code {
-            background: #e5e7eb;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
+            background: #f5f5f5;
+            padding: 3px 8px;
+            font-family: 'Menlo', 'Courier New', monospace;
+            font-size: 0.9em;
+            color: var(--color-text);
         }
 
         ol, ul {
             margin: 15px 0;
-            padding-left: 30px;
+            padding-left: 25px;
+            line-height: 1.9;
         }
 
         li {
             margin: 10px 0;
+            color: var(--color-text);
+        }
+
+        p {
+            margin: 15px 0;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 60px 20px 50px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .container {
+                padding: 40px 20px;
+            }
+
+            .nav-content {
+                flex-direction: column;
+                gap: 15px;
+                padding: 20px;
+            }
+
+            .method-box {
+                padding: 25px 20px;
+            }
         }
     </style>
 </head>
 <body>
     <nav class="nav">
-        <a href="index.html">Home</a>
-        <a href="report.html">Full Report</a>
-        <a href="methodology.html">Methodology</a>
-        <a href="downloads.html">Downloads</a>
+        <div class="nav-content">
+            <a href="index.html">Home</a>
+            <a href="report.html">Full Report</a>
+            <a href="methodology.html">Methodology</a>
+            <a href="downloads.html">Downloads</a>
+        </div>
     </nav>
 
     <div class="header">
