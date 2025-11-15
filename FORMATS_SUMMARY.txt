@@ -1,0 +1,62 @@
+╔══════════════════════════════════════════════════════════════════════╗
+║                   COMMITTRADER OUTPUT FORMATS                         ║
+╚══════════════════════════════════════════════════════════════════════╝
+
+After running your analysis, you get results in MULTIPLE formats:
+
+1. 🌐 INTERACTIVE WEBSITE (docs/)
+   ✓ Professional landing page
+   ✓ Full report with interactive charts
+   ✓ Methodology page
+   ✓ Data downloads
+   ✓ Publish on GitHub Pages
+   → Perfect for: Sharing online, portfolio, social media
+
+2. 📄 HTML REPORT (data/processed/reports/)
+   ✓ Single self-contained file
+   ✓ All charts included
+   ✓ Works offline
+   → Perfect for: Email, Google Drive, quick sharing
+
+3. 📊 CSV DATA (data/processed/snapshots/)
+   ✓ event_study_results.csv - Individual events
+   ✓ aggregated_results.csv - Summary statistics
+   → Perfect for: Excel, further analysis, collaboration
+
+4. 📋 JSON METADATA (data/processed/snapshots/)
+   ✓ summary.json - Key findings
+   ✓ statistical_tests.json - Test results
+   → Perfect for: Programmatic access, README badges
+
+═══════════════════════════════════════════════════════════════════════
+
+HOW TO VIEW YOUR RESULTS:
+
+• Open locally:
+  $ open docs/index.html
+
+• Serve locally:
+  $ python -m http.server 8000 --directory docs
+  Visit: http://localhost:8000
+
+• Publish to GitHub Pages:
+  1. Push 'docs' folder to GitHub
+  2. Enable Pages in repo settings
+  3. Share: https://username.github.io/commitTrader/
+
+═══════════════════════════════════════════════════════════════════════
+
+SHARING YOUR FINDINGS:
+
+✓ Website: Best for online sharing (GitHub Pages)
+✓ PDF: Convert HTML report → Print → Save as PDF
+✓ Blog: Write Medium/Dev.to post with your findings
+✓ Social: Share GitHub Pages link on Twitter/LinkedIn
+✓ Academic: Include in papers as supplementary material
+✓ Portfolio: Add to your personal website
+
+═══════════════════════════════════════════════════════════════════════
+
+See SHARING_GUIDE.md for complete instructions!
+See OUTPUT_FORMATS.md for technical details!
+

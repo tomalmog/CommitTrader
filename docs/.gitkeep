@@ -1,0 +1,7 @@
+# This folder will contain your generated website
+# After running the analysis, you'll find:
+# - index.html - Landing page
+# - report.html - Full interactive report
+# - methodology.html - Research methodology
+# - downloads.html - Data downloads
+# - data/ - CSV and JSON files

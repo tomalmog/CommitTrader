@@ -1,0 +1,75 @@
+ticker,company_name,repo_full_name,repo_type,sector,primary_repo
+MSFT,Microsoft,microsoft/vscode,primary,Technology,TRUE
+MSFT,Microsoft,microsoft/TypeScript,project,Technology,FALSE
+MSFT,Microsoft,microsoft/terminal,project,Technology,FALSE
+MSFT,Microsoft,dotnet/runtime,project,Technology,FALSE
+MSFT,Microsoft,microsoft/playwright,project,Technology,FALSE
+GOOGL,Alphabet,tensorflow/tensorflow,project,Technology,TRUE
+GOOGL,Alphabet,google/guava,project,Technology,FALSE
+GOOGL,Alphabet,kubernetes/kubernetes,project,Technology,FALSE
+GOOGL,Alphabet,angular/angular,project,Technology,FALSE
+GOOGL,Alphabet,flutter/flutter,project,Technology,FALSE
+META,Meta,facebook/react,project,Technology,TRUE
+META,Meta,pytorch/pytorch,project,Technology,FALSE
+META,Meta,facebook/jest,project,Technology,FALSE
+META,Meta,facebook/react-native,project,Technology,FALSE
+META,Meta,facebookresearch/llama,project,Technology,FALSE
+ORCL,Oracle,oracle/graal,primary,Technology,TRUE
+ORCL,Oracle,mysql/mysql-server,subsidiary,Technology,FALSE
+ORCL,Oracle,oracle/opengrok,project,Technology,FALSE
+IBM,IBM,IBM/sarama,primary,Technology,TRUE
+IBM,IBM,IBM/plex,project,Technology,FALSE
+AMZN,Amazon,aws/aws-cli,subsidiary,Technology,TRUE
+AMZN,Amazon,aws/aws-sdk-js,subsidiary,Technology,FALSE
+AMZN,Amazon,aws/aws-cdk,subsidiary,Technology,FALSE
+NFLX,Netflix,Netflix/conductor,primary,Technology,TRUE
+NFLX,Netflix,Netflix/eureka,project,Technology,FALSE
+NFLX,Netflix,Netflix/hystrix,project,Technology,FALSE
+NVDA,NVIDIA,NVIDIA/cuda-samples,primary,Technology,TRUE
+NVDA,NVIDIA,NVlabs/stylegan,project,Technology,FALSE
+CRM,Salesforce,salesforce/lwc,primary,Technology,TRUE
+ADBE,Adobe,adobe/react-spectrum,primary,Technology,TRUE
+ADBE,Adobe,adobe/brackets,project,Technology,FALSE
+SHOP,Shopify,Shopify/polaris,primary,Technology,TRUE
+SHOP,Shopify,Shopify/sarama,project,Technology,FALSE
+UBER,Uber,uber/cadence,primary,Technology,TRUE
+UBER,Uber,uber/h3,project,Technology,FALSE
+SPOT,Spotify,spotify/luigi,primary,Technology,TRUE
+SPOT,Spotify,spotify/backstage,project,Technology,FALSE
+TWTR,Twitter,twitter/the-algorithm,primary,Technology,TRUE
+SQ,Block (Square),square/okhttp,primary,Technology,TRUE
+SQ,Block (Square),square/retrofit,project,Technology,FALSE
+SNAP,Snap,Snap-Inc/snapkit,primary,Technology,TRUE
+TEAM,Atlassian,atlassian/react-beautiful-dnd,primary,Technology,TRUE
+ZM,Zoom,zoom/zoom-sdk-android,primary,Technology,TRUE
+DOCU,DocuSign,docusign/docusign-esign-java-client,primary,Technology,TRUE
+DDOG,Datadog,DataDog/dd-trace-js,primary,Technology,TRUE
+SNOW,Snowflake,snowflakedb/snowflake-connector-python,primary,Technology,TRUE
+MDB,MongoDB,mongodb/mongo,primary,Technology,TRUE
+PANW,Palo Alto Networks,PaloAltoNetworks/pan-os-python,primary,Technology,TRUE
+CRWD,CrowdStrike,CrowdStrike/falconpy,primary,Technology,TRUE
+NET,Cloudflare,cloudflare/cloudflare-docs,primary,Technology,TRUE
+FTNT,Fortinet,fortinet/fortios-ansible,primary,Technology,TRUE
+CSCO,Cisco,cisco/openh264,primary,Technology,TRUE
+AAPL,Apple,apple/swift,project,Technology,TRUE
+AAPL,Apple,apple/ml-stable-diffusion,project,Technology,FALSE
+TSLA,Tesla,teslamotors/vehicle-command,primary,Automotive,TRUE
+INTC,Intel,intel/intel-extension-for-pytorch,primary,Technology,TRUE
+AMD,AMD,ROCm/ROCm,primary,Technology,TRUE
+QCOM,Qualcomm,quic/aimet,primary,Technology,TRUE
+CRM,Salesforce,salesforce/cli,project,Technology,FALSE
+HPE,Hewlett Packard Enterprise,HewlettPackard/oneview-python,primary,Technology,TRUE
+DELL,Dell Technologies,dell/iDRAC-Redfish-Scripting,primary,Technology,TRUE
+SAP,SAP,SAP/ui5-webcomponents,primary,Technology,TRUE
+VMW,VMware,vmware/clarity,primary,Technology,TRUE
+RBLX,Roblox,roblox/roact,primary,Technology,TRUE
+U,Unity,Unity-Technologies/ml-agents,primary,Technology,TRUE
+GTLB,GitLab,gitlabs/gitlabs,primary,Technology,TRUE
+ESTC,Elastic,elastic/elasticsearch,primary,Technology,TRUE
+HUBS,HubSpot,HubSpot/cms-theme-boilerplate,primary,Technology,TRUE
+ZS,Zscaler,zscaler/zscaler-sdk-python,primary,Technology,TRUE
+OKTA,Okta,okta/okta-sdk-python,primary,Technology,TRUE
+WDAY,Workday,Workday/canvas-kit,primary,Technology,TRUE
+NOW,ServiceNow,ServiceNow/servicenow-sdk,primary,Technology,TRUE
+FICO,Fair Isaac,FICOEngineering/FICOScore,primary,Financial Services,TRUE
+TYL,Tyler Technologies,tylertech/tyler-api-docs,primary,Technology,TRUE

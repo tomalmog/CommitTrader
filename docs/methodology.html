@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Methodology - CommitTrader Research</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.8;
+            color: #333;
+            margin: 0;
+        }
+
+        .nav {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 15px 20px;
+        }
+
+        .nav a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            margin-right: 30px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        h2 {
+            color: #667eea;
+            margin-top: 40px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .method-box {
+            background: #f0f4ff;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        code {
+            background: #e5e7eb;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+
+        ol, ul {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="report.html">Full Report</a>
+        <a href="methodology.html">Methodology</a>
+        <a href="downloads.html">Downloads</a>
+    </nav>
+
+    <div class="header">
+        <h1>Research Methodology</h1>
+    </div>
+
+    <div class="container">
+        <h2>Event Study Framework</h2>
+        <p>
+            This research employs standard event study methodology from financial econometrics to
+            measure the impact of GitHub events on stock returns.
+        </p>
+
+        <div class="method-box">
+            <h3>1. Event Identification</h3>
+            <p>Three types of GitHub events are analyzed:</p>
+            <ul>
+                <li><strong>Releases:</strong> Tagged version releases (excluding pre-releases)</li>
+                <li><strong>Commit Spikes:</strong> Unusual increases in commit activity (2+ standard deviations)</li>
+                <li><strong>Milestones:</strong> Major version releases, first commits, repository creation</li>
+            </ul>
+        </div>
+
+        <div class="method-box">
+            <h3>2. Expected Returns Calculation</h3>
+            <p>We use the <strong>market model</strong> to estimate expected returns:</p>
+            <p><code>R_it = α_i + β_i × R_mt + ε_it</code></p>
+            <p>Where:</p>
+            <ul>
+                <li><code>R_it</code> = Stock return for company i at time t</li>
+                <li><code>R_mt</code> = Market return (S&P 500)</li>
+                <li><code>α_i, β_i</code> = OLS regression parameters</li>
+            </ul>
+            <p>Parameters are estimated using 100 trading days (-130 to -31 days before event).</p>
+        </div>
+
+        <div class="method-box">
+            <h3>3. Abnormal Returns</h3>
+            <p><code>AR_it = R_it - E(R_it)</code></p>
+            <p>Where <code>E(R_it)</code> is the expected return from the market model.</p>
+        </div>
+
+        <div class="method-box">
+            <h3>4. Cumulative Abnormal Returns</h3>
+            <p><code>CAR_i(t1, t2) = Σ AR_it</code> for t = t1 to t2</p>
+            <p>We calculate CAR for multiple windows:</p>
+            <ul>
+                <li>Day 0: Event day only</li>
+                <li>Days 0 to +1: Event day plus next day</li>
+                <li>Days -1 to +1: Three-day window</li>
+                <li>Days -5 to +5: Full event window</li>
+            </ul>
+        </div>
+
+        <h2>Statistical Testing</h2>
+
+        <div class="method-box">
+            <h3>Parametric Tests</h3>
+            <ul>
+                <li><strong>t-test:</strong> Tests if mean abnormal return differs from zero</li>
+                <li><strong>ANOVA:</strong> Compares abnormal returns across event types</li>
+            </ul>
+        </div>
+
+        <div class="method-box">
+            <h3>Non-Parametric Tests</h3>
+            <ul>
+                <li><strong>Sign Test:</strong> Tests if median AR equals zero (no distributional assumptions)</li>
+                <li><strong>Wilcoxon Signed-Rank:</strong> Robust alternative to t-test</li>
+            </ul>
+        </div>
+
+        <h2>Data Sources</h2>
+        <ul>
+            <li><strong>GitHub Data:</strong> GitHub REST API v3</li>
+            <li><strong>Stock Prices:</strong> Yahoo Finance (via yfinance library)</li>
+            <li><strong>Market Index:</strong> S&P 500 (^GSPC)</li>
+        </ul>
+
+        <h2>Limitations</h2>
+        <ul>
+            <li><strong>Confounding Events:</strong> Other news may occur simultaneously with GitHub events</li>
+            <li><strong>Selection Bias:</strong> Analysis limited to companies with public GitHub presence</li>
+            <li><strong>Data Quality:</strong> Depends on accuracy of GitHub API and stock data</li>
+            <li><strong>Market Efficiency:</strong> Markets may quickly incorporate public information</li>
+        </ul>
+
+        <h2>Software</h2>
+        <p>
+            Analysis conducted using <strong>CommitTrader</strong>, an open-source quantitative research platform.
+            Key libraries: pandas, numpy, scipy, statsmodels, yfinance, PyGithub.
+        </p>
+    </div>
+</body>
+</html>
