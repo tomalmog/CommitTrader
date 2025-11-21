@@ -423,19 +423,6 @@ class WebsiteGenerator:
             margin: 0;
         }}
 
-        .nav {{
-            background: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            padding: 15px 20px;
-        }}
-
-        .nav a {{
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 600;
-            margin-right: 30px;
-        }}
-
         .header {{
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -487,13 +474,6 @@ class WebsiteGenerator:
     </style>
 </head>
 <body>
-    <nav class="nav">
-        <a href="index.html">Home</a>
-        <a href="report.html">Full Report</a>
-        <a href="methodology.html">Methodology</a>
-        <a href="downloads.html">Downloads</a>
-    </nav>
-
     <div class="header">
         <h1>Research Methodology</h1>
     </div>
@@ -615,19 +595,6 @@ class WebsiteGenerator:
             margin: 0;
         }
 
-        .nav {
-            background: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            padding: 15px 20px;
-        }
-
-        .nav a {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 600;
-            margin-right: 30px;
-        }
-
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -678,13 +645,6 @@ class WebsiteGenerator:
     </style>
 </head>
 <body>
-    <nav class="nav">
-        <a href="index.html">Home</a>
-        <a href="report.html">Full Report</a>
-        <a href="methodology.html">Methodology</a>
-        <a href="downloads.html">Downloads</a>
-    </nav>
-
     <div class="header">
         <h1>Download Research Data</h1>
         <p>All data and results available for download</p>
