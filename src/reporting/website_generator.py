@@ -150,9 +150,9 @@ class WebsiteGenerator:
         }}
 
         .container {{
-            max-width: 1200px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 60px 40px;
         }}
 
         .nav {{
@@ -164,11 +164,12 @@ class WebsiteGenerator:
         }}
 
         .nav-content {{
-            max-width: 1200px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 15px 20px;
+            padding: 20px 40px;
             display: flex;
-            gap: 30px;
+            gap: 35px;
+            font-size: 0.95em;
         }}
 
         .nav a {{

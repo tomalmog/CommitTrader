@@ -261,110 +261,211 @@ class HTMLReportGenerator:
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title}</title>
     <style>
+        :root {{
+            --color-bg: #fafafa;
+            --color-text: #1a1a1a;
+            --color-text-light: #666;
+            --color-border: #e0e0e0;
+            --color-accent: #2c2c2c;
+            --font-serif: 'Georgia', 'Times New Roman', serif;
+            --font-sans: 'Helvetica Neue', Arial, sans-serif;
+        }}
+
+        * {{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }}
+
         body {{
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 1400px;
+            font-family: var(--font-sans);
+            line-height: 1.7;
+            color: var(--color-text);
+            background: var(--color-bg);
+        }}
+
+        .nav {{
+            background: white;
+            border-bottom: 1px solid var(--color-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }}
+
+        .nav-content {{
+            max-width: 900px;
             margin: 0 auto;
-            padding: 20px;
-            background: #f5f5f5;
+            padding: 20px 40px;
+            display: flex;
+            gap: 35px;
+            font-size: 0.95em;
+        }}
+
+        .nav a {{
+            color: var(--color-text);
+            text-decoration: none;
+            transition: opacity 0.4s ease;
+            opacity: 0.6;
+        }}
+
+        .nav a:hover {{
+            opacity: 1;
         }}
 
         .header {{
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 40px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            background: white;
+            border-bottom: 1px solid var(--color-border);
+            padding: 60px 50px;
+            margin-bottom: 50px;
+            text-align: center;
         }}
 
         .header h1 {{
-            margin: 0;
-            font-size: 2.5em;
+            font-family: var(--font-serif);
+            font-size: 2.8em;
+            font-weight: 400;
+            color: var(--color-accent);
+            margin-bottom: 15px;
+            letter-spacing: -0.02em;
         }}
 
         .header .subtitle {{
-            opacity: 0.9;
-            margin-top: 10px;
-            font-size: 1.1em;
+            color: var(--color-text-light);
+            font-size: 1em;
+            margin: 10px 0;
+            font-weight: 300;
+        }}
+
+        .container {{
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 40px 80px;
         }}
 
         .section {{
             background: white;
-            padding: 30px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 50px;
+            margin-bottom: 30px;
+            border: 1px solid var(--color-border);
+            border-top: none;
+        }}
+
+        .section:first-of-type {{
+            border-top: 1px solid var(--color-border);
         }}
 
         .section h2 {{
-            color: #667eea;
-            margin-top: 0;
-            border-bottom: 2px solid #667eea;
-            padding-bottom: 10px;
+            font-family: var(--font-serif);
+            font-size: 1.8em;
+            font-weight: 400;
+            color: var(--color-accent);
+            margin: 0 0 30px 0;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--color-border);
+            letter-spacing: -0.01em;
+        }}
+
+        .section h3 {{
+            font-family: var(--font-serif);
+            font-size: 1.3em;
+            font-weight: 400;
+            color: var(--color-accent);
+            margin: 30px 0 15px 0;
         }}
 
         .stats-grid {{
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 20px 0;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1px;
+            background: var(--color-border);
+            border: 1px solid var(--color-border);
+            margin: 30px 0;
         }}
 
         .stat-card {{
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 8px;
+            background: white;
+            padding: 35px 25px;
             text-align: center;
+            transition: background 0.4s ease;
+        }}
+
+        .stat-card:hover {{
+            background: #fcfcfc;
         }}
 
         .stat-card .label {{
-            font-size: 0.9em;
-            opacity: 0.9;
-            margin-bottom: 5px;
+            font-size: 0.75em;
+            color: var(--color-text-light);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            font-weight: 500;
         }}
 
         .stat-card .value {{
             font-size: 2em;
-            font-weight: bold;
+            font-weight: 300;
+            color: var(--color-accent);
+            font-family: var(--font-serif);
         }}
 
         table {{
             width: 100%;
             border-collapse: collapse;
-            margin: 20px 0;
+            margin: 30px 0;
+            border: 1px solid var(--color-border);
         }}
 
         th, td {{
-            padding: 12px;
+            padding: 16px 20px;
             text-align: left;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid var(--color-border);
         }}
 
         th {{
-            background: #667eea;
-            color: white;
-            font-weight: 600;
+            background: #f9f9f9;
+            color: var(--color-text);
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.75em;
+            letter-spacing: 1px;
         }}
 
         tr:hover {{
-            background: #f5f5f5;
+            background: #fcfcfc;
+        }}
+
+        tr:last-child td {{
+            border-bottom: none;
         }}
 
         .significance {{
             display: inline-block;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-weight: bold;
+            padding: 3px 10px;
+            font-size: 0.85em;
+            font-weight: 400;
+            letter-spacing: 0.5px;
         }}
 
-        .sig-high {{ background: #10b981; color: white; }}
-        .sig-med {{ background: #f59e0b; color: white; }}
-        .sig-low {{ background: #6366f1; color: white; }}
-        .sig-none {{ background: #e5e7eb; color: #6b7280; }}
+        .sig-high {{
+            background: #1a1a1a;
+            color: white;
+        }}
+
+        .sig-med {{
+            background: #666;
+            color: white;
+        }}
+
+        .sig-low {{
+            background: #999;
+            color: white;
+        }}
+
+        .sig-none {{
+            background: #e5e7eb;
+            color: #6b7280;
+        }}
 
         .footer {{
             text-align: center;
@@ -387,8 +488,18 @@ class HTMLReportGenerator:
     </style>
 </head>
 <body>
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="index.html">Home</a>
+            <a href="report.html">Full Report</a>
+            <a href="visualizations.html">Visualizations</a>
+            <a href="methodology.html">Methodology</a>
+            <a href="downloads.html">Downloads</a>
+        </div>
+    </nav>
+
     <div class="header">
-        <h1>📊 {title}</h1>
+        <h1>{title}</h1>
         <div class="subtitle">
             Quantitative Analysis of GitHub Activity and Stock Price Relationships
         </div>
@@ -397,6 +508,7 @@ class HTMLReportGenerator:
         </div>
     </div>
 
+    <div class="container">
     <div class="section">
         <h2>Executive Summary</h2>
         <div class="stats-grid">
@@ -498,6 +610,8 @@ class HTMLReportGenerator:
                 <li>Market Index: S&P 500 (^GSPC)</li>
             </ul>
         </div>
+    </div>
+
     </div>
 
     <div class="footer">
