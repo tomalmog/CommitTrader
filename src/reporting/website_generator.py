@@ -170,6 +170,7 @@ class WebsiteGenerator:
             display: flex;
             gap: 35px;
             font-size: 0.95em;
+            justify-content: center;
         }}
 
         .nav a {{
